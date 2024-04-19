@@ -29,7 +29,7 @@ public class FlowableUtils {
     }
 
     public static List<NextTaskRun> resolveSequentialNexts(
-        Execution execution,
+ResolveStateContext context
         List<ResolvedTask> tasks,
         List<ResolvedTask> errors
     ) {
@@ -37,10 +37,7 @@ public class FlowableUtils {
     }
 
     public static List<NextTaskRun> resolveSequentialNexts(
-        Execution execution,
-        List<ResolvedTask> tasks,
-        List<ResolvedTask> errors,
-        TaskRun parentTaskRun
+        SequentialNextsContext context
     ) {
         List<ResolvedTask> currentTasks = execution.findTaskDependingFlowState(tasks, errors, parentTaskRun);
 
@@ -89,10 +86,7 @@ public class FlowableUtils {
     }
 
     public static Optional<State.Type> resolveState(
-        Execution execution,
-        List<ResolvedTask> tasks,
-        List<ResolvedTask> errors,
-        TaskRun parentTaskRun,
+        SequentialNextsContext context,
         RunContext runContext,
         boolean allowFailure
     ) {
@@ -141,10 +135,7 @@ public class FlowableUtils {
     }
 
     public static List<NextTaskRun> resolveParallelNexts(
-        Execution execution,
-        List<ResolvedTask> tasks,
-        List<ResolvedTask> errors,
-        TaskRun parentTaskRun,
+        SequentialNextsContext context,
         Integer concurrency
     ) {
         return resolveParallelNexts(
@@ -157,10 +148,7 @@ public class FlowableUtils {
     }
 
     public static List<NextTaskRun> resolveDagNexts(
-        Execution execution,
-        List<ResolvedTask> tasks,
-        List<ResolvedTask> errors,
-        TaskRun parentTaskRun,
+        SequentialNextsContext context,
         Integer concurrency,
         List<Dag.DagTask> taskDependencies
     ) {
@@ -197,10 +185,7 @@ public class FlowableUtils {
     }
 
     public static List<NextTaskRun> resolveParallelNexts(
-        Execution execution,
-        List<ResolvedTask> tasks,
-        List<ResolvedTask> errors,
-        TaskRun parentTaskRun,
+        SequentialNextsContext context,
         Integer concurrency,
         BiFunction<Stream<NextTaskRun>, List<TaskRun>, Stream<NextTaskRun>> nextTaskRunFunction
     ) {
